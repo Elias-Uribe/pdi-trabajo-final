@@ -9,22 +9,29 @@
 
 ## 🧪 Descripción
 
-Este proyecto detecta, segmenta y cuenta glóbulos rojos y glóbulos blancos a partir de imágenes microscópicas digitales de sangre.  
-Se utilizan técnicas de procesamiento morfológico, filtrado y segmentación (incluyendo watershed) para obtener resultados precisos.
-
----
+## Este proyecto detecta, segmenta y cuenta glóbulos rojos y blancos a partir de imágenes microscópicas de sangre. Se utilizan técnicas de procesamiento morfológico clásico, junto con modelos de segmentación profunda como U-Net, para lograr una segmentación precisa y adaptable.
 
 ## 📁 Estructura del Proyecto
 
 ```
-Proyecto final - Elias Uribe/
+pdi-trabajo-final
 │
-├── images/         # Carpeta para imágenes de entrada (estas imágenes son de prueba, la propia interface te dejara seleccionar la imagen que quieras)
-├── modules/        # Módulos reutilizables y funciones específicas
-├── main.py         # Script auxiliar (no se ejecuta directamente, es para pruebas)
-├── procesador.py   # Contiene la lógica principal del procesamiento
-├── interface.py    # ⚙️ Ejecutable principal del proyecto
-└── README.md       # Instrucciones de uso y documentación
+├── images/               # Imágenes de entrada (microscopía)
+├── masks/                # Máscaras generadas para entrenamiento del modelo
+├── data/
+│   ├── images/           # Imágenes para entrenamiento U-Net
+│   └── masks/            # Máscaras binarias de glóbulos blancos
+│
+├── modules/              # Módulos reutilizables y funciones específicas
+│
+├── interface.py          # ⚙️ Ejecutable principal para conteo tradicional
+├── procesador.py         # Contiene la lógica principal del procesamiento
+│
+├── unet_model.py         # Entrenamiento de modelo U-Net (usa /data/images y /data/masks)
+├── pruebas_model.py      # Utiliza un modelo .keras entrenado para segmentar glóbulos blancos
+│
+├── mejor_modelo.keras    # 🧠 Modelo entrenado con U-Net
+└── README.md             # Documentación
 ```
 
 ---
@@ -52,6 +59,25 @@ python interface.py
 ```
 
 El script procesará la imagen seleccionada desde su computadora, mostrará visualmente los resultados y contará los glóbulos rojos y blancos detectados.
+
+---
+
+## 🧠 Entrenar el modelo U-Net
+
+---
+
+Asegurate de tener:
+
+- Carpeta data/images/: imágenes reales en color
+- Carpeta data/masks/: máscaras binarias de glóbulos blancos (fondo = negro, glóbulos = blanco)
+
+Instalar dependencias adicionales:
+
+- pip install tensorflow keras scikit-learn
+
+Ejecutar el script de entrenamiento:
+
+- python unet_model.py
 
 ---
 
